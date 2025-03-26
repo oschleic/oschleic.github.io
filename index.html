@@ -1,63 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="canonical" href="/">
-        <meta name="description" content="">
-        <title>Owen Schleicher</title>
-        <link rel="stylesheet" href="/assets/build/css/main.css?id=c185dde96645c1d5ae5bbb350cebc213">
-        <script defer src="/assets/build/js/main.js?id=100ad37f415a3c632af84b3ea6bdd737"></script>
-        <script defer src="/assets/build/js/fontawesome.js?id=84c66d376daa99d7040f985fcd8b13b9"></script>
-        <script defer src="/assets/build/js/brands.js?id=8fead110120b5ecaa6412f131185569f"></script>
-        <script defer src="/assets/build/js/regular.js?id=9c531ea61d0f56cd649842ce631374de"></script>
-    </head>
-    <body class="text-slate-200 font-sans antialiased bg-zinc-900 min-h-screen flex flex-col">
-        <nav class="flex items-center justify-between flex-wrap p-6">
-  <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <h1 class="font-semibold text-2xl tracking-tight">Owen Schleicher</span>
-  </div>
-  <div class="block lg:hidden">
-    <button class="flex items-center px-3 py-2 border rounded hover:text-blue-glow hover:border-blue-glow" id="menu-toggle">
-      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-    </button>
-  </div>
-  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden lg:visible" id="nav-items">
-    <div class="text-sm lg:flex-grow">
-      <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Home
-      </a>
-    </div>
-  </div>
-</nav>
-<div class="pt-8 pl-8 pr-8">
-    <div class="block sm:flex sm:flex-initial sm:justify-around">
-        <div class="sm:mt-auto sm:mb-auto">
-            <h1 class="text-3xl font-bold">Hi, I'm Owen</h1>
-            <p class="text-lg text-slate-400">
-              I'm a fullstack software developer
-            </p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Portfolio - Windows 95 Style</title>
+    <style>
+        /* Windows 95 Color Palette */
+        :root {
+            --win95-bg: #c0c0c0;
+            --win95-dark: #808080;
+            --win95-darker: #404040;
+            --win95-light: #dfdfdf;
+            --win95-white: #ffffff;
+            --win95-blue: #000080;
+            --win95-teal: #008080;
+        }
+        
+        body {
+            font-family: "MS Sans Serif", "Pixelated MS Sans Serif", Arial, sans-serif;
+            background-color: var(--win95-teal);
+            color: black;
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+        
+        .desktop {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-color: var(--win95-bg);
+            border-top: 2px solid var(--win95-light);
+            display: flex;
+            z-index: 1000;
+        }
+        
+        .start-button {
+            display: flex;
+            align-items: center;
+            height: 28px;
+            padding: 0 5px;
+            margin: 1px;
+            background-color: var(--win95-bg);
+            border-top: 2px solid var(--win95-light);
+            border-left: 2px solid var(--win95-light);
+            border-right: 2px solid var(--win95-darker);
+            border-bottom: 2px solid var(--win95-darker);
+            cursor: pointer;
+        }
+        
+        .start-button:active {
+            border-top: 2px solid var(--win95-darker);
+            border-left: 2px solid var(--win95-darker);
+            border-right: 2px solid var(--win95-light);
+            border-bottom: 2px solid var(--win95-light);
+        }
+        
+        .start-button span {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .clock {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-left: 1px solid var(--win95-dark);
+            height: 100%;
+        }
+        
+        .window {
+            position: absolute;
+            background-color: var(--win95-bg);
+            border-top: 2px solid var(--win95-light);
+            border-left: 2px solid var(--win95-light);
+            border-right: 2px solid var(--win95-darker);
+            border-bottom: 2px solid var(--win95-darker);
+            width: 550px;
+            min-height: 300px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .title-bar {
+            background-color: var(--win95-blue);
+            color: white;
+            padding: 3px 5px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .title-bar-text {
+            margin-right: auto;
+        }
+        
+        .title-bar-controls {
+            display: flex;
+        }
+        
+        .title-bar-controls button {
+            width: 16px;
+            height: 16px;
+            margin-left: 2px;
+            background-color: var(--win95-bg);
+            border-top: 1px solid var(--win95-light);
+            border-left: 1px solid var(--win95-light);
+            border-right: 1px solid var(--win95-darker);
+            border-bottom: 1px solid var(--win95-darker);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            padding: 0;
+            cursor: pointer;
+        }
+        
+        .window-content {
+            padding: 10px;
+            overflow: auto;
+            max-height: 450px;
+        }
+        
+        .desktop-icon {
+            width: 70px;
+            text-align: center;
+            margin: 15px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .desktop-icon img {
+            width: 32px;
+            height: 32px;
+            display: block;
+            margin: 0 auto 5px;
+        }
+        
+        .desktop-icon span {
+            color: white;
+            text-shadow: 1px 1px 1px black;
+        }
+        
+        .tab-container {
+            margin-top: 10px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--win95-dark);
+        }
+        
+        .tab-button {
+            padding: 5px 10px;
+            background-color: var(--win95-bg);
+            border-top: 2px solid var(--win95-light);
+            border-left: 2px solid var(--win95-light);
+            border-right: 2px solid var(--win95-darker);
+            border-bottom: none;
+            margin-right: 4px;
+            cursor: pointer;
+        }
+        
+        .tab-button.active {
+            background-color: var(--win95-light);
+            border-bottom: 1px solid var(--win95-light);
+            position: relative;
+            top: 1px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 10px;
+            background-color: var(--win95-light);
+            border-left: 2px solid var(--win95-light);
+            border-right: 2px solid var(--win95-darker);
+            border-bottom: 2px solid var(--win95-darker);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        h2 {
+            margin-top: 0;
+            font-size: 14px;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 16px;
+            border: 2px solid;
+            border-top-color: var(--win95-darker);
+            border-left-color: var(--win95-darker);
+            border-right-color: var(--win95-light);
+            border-bottom-color: var(--win95-light);
+            background-color: var(--win95-white);
+            margin: 5px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--win95-blue);
+        }
+        
+        .skill-item {
+            margin-bottom: 10px;
+        }
+        
+        .project-item {
+            margin-bottom: 15px;
+            border: 1px solid var(--win95-dark);
+            padding: 8px;
+            background-color: var(--win95-white);
+        }
+        
+        button.win95-button {
+            background-color: var(--win95-bg);
+            border-top: 2px solid var(--win95-light);
+            border-left: 2px solid var(--win95-light);
+            border-right: 2px solid var(--win95-darker);
+            border-bottom: 2px solid var(--win95-darker);
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        
+        button.win95-button:active {
+            border-top: 2px solid var(--win95-darker);
+            border-left: 2px solid var(--win95-darker);
+            border-right: 2px solid var(--win95-light);
+            border-bottom: 2px solid var(--win95-light);
+        }
+        
+        input.win95-input, textarea.win95-input {
+            border-top: 2px solid var(--win95-darker);
+            border-left: 2px solid var(--win95-darker);
+            border-right: 2px solid var(--win95-light);
+            border-bottom: 2px solid var(--win95-light);
+            background-color: white;
+            padding: 3px 5px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .status-bar {
+            border-top: 2px solid var(--win95-dark);
+            padding: 5px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Startup screen */
+        .startup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--win95-blue);
+            color: white;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .windows-logo {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .loading-bar-container {
+            width: 300px;
+            height: 20px;
+            border: 2px solid white;
+            margin-top: 20px;
+        }
+        
+        .loading-bar {
+            height: 100%;
+            background-color: white;
+            width: 0%;
+            animation: loading 3s forwards;
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        #about-window {
+            top: 50px;
+            left: 50px;
+        }
+        
+        #projects-window {
+            top: 100px;
+            left: 150px;
+            z-index: 2;
+        }
+        
+        #contact-window {
+            top: 150px;
+            left: 250px;
+        }
+        
+        .window-menu {
+            display: flex;
+            border-bottom: 1px solid var(--win95-dark);
+            padding: 2px 0;
+        }
+        
+        .window-menu span {
+            padding: 2px 8px;
+            position: relative;
+        }
+        
+        .window-menu span:hover {
+            background-color: var(--win95-blue);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Startup Screen -->
+    <div class="startup" id="startup">
+        <div class="windows-logo">Windows 95</div>
+        <div>Starting up...</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
         </div>
-        <div class="pt-3 pl-3 pr-3">
-            <img src="/assets/images/headshot-no-bg.png"/>
-        </div>
     </div>
 
+    <!-- Desktop -->
+    <div class="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" onclick="openWindow('about-window')">
+            <img src="./smile.ico" alt="My Computer">
+            <span>My Profile</span>
+        </div>
+        
+        <div class="desktop-icon" onclick="openWindow('contact-window')">
+            <img src="./phone.ico" alt="Contact">
+            <span>Contact</span>
+        </div>
+        
+        <!-- About Window -->
+        <div class="window" id="about-window">
+            <div class="title-bar">
+                <div class="title-bar-text">My Profile</div>
+                <div class="title-bar-controls">
+                    <button onclick="minimizeWindow('about-window')">_</button>
+                    <button onclick="maximizeWindow('about-window')">□</button>
+                    <button onclick="closeWindow('about-window')">✕</button>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content">
+                <h2>Owen Schleicher - Software Engineer</h2>
+                <p>Welcome to my Windows 95-style portfolio! I'm a passionate software engineer with expertise in web development, backend systems, and cloud architecture.</p>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <div class="tab-button active" onclick="switchTab('about', 'skills')">Skills</div>
+                        <div class="tab-button" onclick="switchTab('about', 'experience')">Experience</div>
+                        <div class="tab-button" onclick="switchTab('about', 'education')">Education</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="about-skills">
+                        <h3>Technical Skills</h3>
+                        
+                        <div class="skill-item">
+                            <div>JavaScript</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div>React</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div>Node.js</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div>Python</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div>AWS</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div>SQL</div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="about-experience">
+                        <h3>Work Experience</h3>
+                        
+                        <div class="project-item">
+                            <h4>Software Engineer - NAWCWD</h4>
+                            <p>2023 - Present</p>
+                        </div>
+                        
+                        <div class="project-item">
+                            <h4>Software Developer - Swarmbox</h4>
+                            <p>2022 - 2023</p>
+                            <ul>
+                                <li>Streamlined software development lifecycle processes with CI/CD and Docker, allowing more time for strategic
+                                    feature enhancements through effective process automation.</li>
+                                <li>Collaborated with third party software company to synchronize distributed systems through a REST API,
+                                    demonstrating excellent verbal communication and problem-solving skills to ensure seamless data integration.</li>
+                                <li>Utilized technical expertise to create a backend Java software library, enabling faster label design for label
+                                    printers.</li>
+                                <li>Managed and led a team in the complete rewrite of a handheld scanner application to an Android platform.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="project-item">
+                            <h4>Web Developer - Iowa State University</h4>
+                            <p>2020</p>
+                            <ul>
+                                <li>Transformed an obsolete intranet application into a modernized solution using contemporary web technology.</li>
+                                <li>Addressed security concerns by implementing DevSecOps practices, ensuring compliance with University IT’s
+                                    data protection standards.</li>
+                                <li>Configured and maintained WordPress sites, showcased backend development skills and attention to detail.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="about-education">
+                        <h3>Education</h3>
+                        
+                        <div class="project-item">
+                            <h4>Bachelor of Science in Software Engineering</h4>
+                            <p>Arizona State University</p>
+                        </div>
+                        
+                        <h3>Certifications</h3>
+                        
+                        <div class="project-item">
+                            <h4>Machine Learning Specialization</h4>
+                            <p>Stanford University & Deeplearning.AI</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="status-bar">
+                <span>Ready</span>
+            </div>
+        </div>
+        
+        <!-- Contact Window -->
+        <div class="window" id="contact-window" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-text">Contact Me</div>
+                <div class="title-bar-controls">
+                    <button onclick="minimizeWindow('contact-window')">_</button>
+                    <button onclick="maximizeWindow('contact-window')">□</button>
+                    <button onclick="closeWindow('contact-window')">✕</button>
+                </div>
+            </div>
+            <div class="window-menu">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+            <div class="window-content">
+                <h2>Get In Touch</h2>
+                <p>Feel free to contact me for job opportunities, collaborations, or just to say hello!</p>
+                
+                <form action="https://formspree.io/f/xzzevjbe"
+                method="POST" id="message-form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" class="win95-input">
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="win95-input">
+                    
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="6" class="win95-input"></textarea>
+                    
+                    <button class="win95-button" type="submit" onclick="alert('Your message has been sent!')">Send Message</button>
+                </form>
+                
+                <div style="margin-top: 20px;">
+                    <h3>Other Ways to Reach Me</h3>
+                    <p><strong>Email:</strong> owensch2025@gmail.com</p>
+                    <p><strong>LinkedIn:</strong> https://www.linkedin.com/in/owen-s-504122140/</p>
+                    <p><strong>GitHub:</strong> https://github.com/oschleic</p>
+                </div>
+            </div>
+            <div class="status-bar">
+                <span>Ready</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button" onclick="toggleStartMenu()">
+            <img src="./windows-logo.ico" alt="Start icon">
+            <span>Start</span>
+        </div>
+        <div class="clock" id="clock">4:20 PM</div>
+    </div>
+    
+    <script>
+        // Hide startup screen after loading
+        window.onload = function() {
+            openWindow('about-window');
 
-</div>
-<footer class="flex flex-initial justify-around mt-auto pb-3">
-  <div class="flex gap-5 sm:mt-auto sm:mb-auto">
-    <a href="https://www.linkedin.com/in/owen-s-504122140/" class="hover:text-blue-glow hover:border-blue-glow cursor-pointer">
-      <i class="fa-brands fa-linkedin fa-2xl"></i>
-    </a>
-    <a href="https://github.com/oschleic" class="hover:text-blue-glow hover:border-blue-glow cursor-pointer">
-      <i class="fa-brands fa-github fa-2xl"></i>
-    </a>
-    <a class="hover:text-blue-glow hover:border-blue-glow cursor-pointer" href="mailto:oschleic@asu.edu">
-      <i class="fa-regular fa-envelope fa-2xl"></i>
-    </a>
-  </div>
-</footer>
+            
+            // Update clock
+            updateClock();
+            setInterval(updateClock, 60000);
+        };
+        
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('clock').textContent = hours + ':' + minutesStr + ' ' + ampm;
+        }
+        
+        function openWindow(windowId) {
+            // Hide all windows
+            const windows = document.querySelectorAll('.window');
+            let maxZIndex = 0;
+            
+            windows.forEach(function(win) {
+                const zIndex = parseInt(win.style.zIndex || 0);
+                if (zIndex > maxZIndex) {
+                    maxZIndex = zIndex;
+                }
+            });
+            
+            // Show the selected window
+            const win = document.getElementById(windowId);
+            win.style.display = 'block';
+            win.style.zIndex = maxZIndex + 1;
+        }
+        
+        function closeWindow(windowId) {
+            document.getElementById(windowId).style.display = 'none';
+        }
+        
+        function minimizeWindow(windowId) {
+            document.getElementById(windowId).style.display = 'none';
+            // In a real implementation, we would show this in the taskbar
+        }
+        
+        function maximizeWindow(windowId) {
+            const win = document.getElementById(windowId);
+            // Toggle maximized state
+            if (win.style.width === '100%') {
+                win.style.width = '550px';
+                win.style.height = 'auto';
+                win.style.top = '100px';
+                win.style.left = '100px';
+            } else {
+                win.style.width = '100%';
+                win.style.height = 'calc(100vh - 30px)';
+                win.style.top = '0';
+                win.style.left = '0';
+            }
+        }
+        
+        function switchTab(windowPrefix, tabName) {
+            // Hide all tabs
+            const contents = document.querySelectorAll(`[id^="${windowPrefix}-"]`);
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+            
+            // Show the selected tab
+            document.getElementById(`${windowPrefix}-${tabName}`).classList.add('active');
+            
+            // Update tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(function(button) {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+        
+        // Make windows draggable
+        const windows = document.querySelectorAll('.window');
 
-    </body>
+        const form = document.getElementById('message-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+            if (response.ok) {
+                // Handle success (e.g., display a message)
+                console.log('Form submitted successfully!');
+            } else {
+                // Handle error
+                console.error('Form submission failed.');
+            }
+            })
+            .catch(error => {
+            console.error('Network error:', error);
+            });
+        });
+        
+        windows.forEach(function(win) {
+            const titleBar = win.querySelector('.title-bar');
+            let isDragging = false;
+            let offsetX, offsetY;
+            
+            titleBar.addEventListener('mousedown', function(e) {
+                if (e.target === titleBar || e.target.classList.contains('title-bar-text')) {
+                    isDragging = true;
+                    offsetX = e.clientX - win.getBoundingClientRect().left;
+                    offsetY = e.clientY - win.getBoundingClientRect().top;
+                    
+                    // Bring window to front
+                    let maxZIndex = 0;
+                    windows.forEach(function(w) {
+                        const zIndex = parseInt(w.style.zIndex || 0);
+                        if (zIndex > maxZIndex) {
+                            maxZIndex = zIndex;
+                        }
+                    });
+                    win.style.zIndex = maxZIndex + 1;
+                }
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    win.style.left = (e.clientX - offsetX) + 'px';
+                    win.style.top = (e.clientY - offsetY) + 'px';
+                }
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+        });
+        
+        function toggleStartMenu() {
+            // In a full implementation, this would show a start menu
+            //alert("Start Menu - Not implemented in this demo");
+        }
+    </script>
+</body>
 </html>
